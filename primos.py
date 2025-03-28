@@ -107,9 +107,7 @@ def mcd(num1, num2):
 
     for i in fact_1:
         if i in fact_2:
-            mcm *= i
             fact_2.remove(i)
-        else:
             mcd *= i
     
     return mcd
