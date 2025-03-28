@@ -47,6 +47,105 @@ def primos(numero):
     
     return tuple([i for i in range (2, numero) if esPrimo(i)])
 
+def descompon(numero):
+    """
+    Devuelve una tupla con la descomposición en factores primos de su argumento.
+
+    >>> descompon(36 * 175 * 143)
+    (2, 2, 3, 3, 5, 5, 7, 11, 13)
+    """
+
+    lista = []
+    divisor = 2
+    while divisor * divisor <= numero:
+      while numero % divisor == 0:
+         lista.append(divisor)
+         numero //= divisor
+      divisor += 1
+    if numero > 1:
+        lista.append(numero)
+    return tuple(lista)
+
+def mcm(num1, num2):
+    """
+    Devuelve el mínimo común múltiplo de sus argumentos.
+
+    >>> mcm(90, 14)
+    630
+    """
+
+    fact_1 = list(descompon(num1))
+    fact_2 = list(descompon(num2))
+
+    mcm = 1
+
+    for i in fact_1:
+        if i in fact_2:
+            mcm *= i
+            fact_2.remove(i)
+        else:
+            mcm *= i
+
+
+    for i in fact_2:
+        mcm *= i
+
+    return mcm
+
+def mcd(num1, num2):
+    """
+    Devuelve el máximo común divisor de sus argumentos.
+
+    >>> mcd(924, 780)
+    12
+    """
+
+    fact_1 = list(descompon(num1))
+    fact_2 = list(descompon(num2))
+
+    mcd = 1
+
+    for i in fact_1:
+        if i in fact_2:
+            mcm *= i
+            fact_2.remove(i)
+        else:
+            mcd *= i
+    
+    return mcd
+
+def mcmN(*numeros):
+    """
+    Devuelve el mínimo común múltiplo de sus argumentos.
+
+    >>> mcmN(42, 60, 70, 63)
+    1260
+    """
+
+    if not numeros:
+        return 1
+    resultado = numeros[0]
+    for numero in numeros[1:]:
+        resultado = mcm(resultado, numero)
+    
+    return resultado
+
+def mcdN(*numeros):
+    """
+    Devuelve el máximo común divisor de sus argumentos.
+
+    >>> mcdN(840, 630, 1050, 1470)
+    210
+    """
+
+    if not numeros:
+        return 1
+    resultado = numeros[0]
+    for numero in numeros[1:]:
+        resultado = mcd(resultado, numero)
+    
+    return resultado
+
 
 if __name__=="__main__":
     import doctest
